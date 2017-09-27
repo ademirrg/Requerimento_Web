@@ -1,0 +1,62 @@
+package requerimento;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import com.sun.jna.platform.win32.OaIdl.DATE;
+
+public class ConsultaBH {
+	
+	WebDriver driver;
+	String cpf = "36264448800";
+	
+	public void abreBrowser(){
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+	
+	public void fechaBrowser(){
+		driver.quit();
+	}
+	
+	public void consultaHoras(){
+		driver.get("https://aplic.inmetrics.com.br//requerimento/content/login.php");
+		WebElement user = driver.findElement(By.id("fun_Id"));
+		user.sendKeys(cpf);
+		WebElement pass = driver.findElement(By.id("fun_Senha"));
+		pass.sendKeys(cpf);
+		WebElement btContinuar = driver.findElement(By.id("btnSubmitLogn"));
+		btContinuar.click();
+		WebElement table = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]"));
+		WebElement coluna = table.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]/tbody/tr[9]/td"));
+		coluna.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]/tbody/tr[9]/td/text()")).click();
+		
+		//saldoBH.trim();
+		//String saldoBHSeparado[] = saldoBH.split(":");
+		//saldoBH = saldoBHSeparado[1] + ":" + saldoBHSeparado[2];
+//
+//		SimpleDateFormat t = new SimpleDateFormat("hhh:mm");
+//		java.util.Date data = null;
+		
+//	    try {
+//	        data = t.parse(saldoBH);
+//	    } catch (ParseException e) {
+//	        e.printStackTrace();
+//	    }
+//		
+//	   // String saldoFormatado = t.format(data);
+//	    
+//		//System.out.println(saldoBH + ">>>>" + saldoFormatado);
+//		
+//		System.out.println(saldoBH);
+	}
+	
+}

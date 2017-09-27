@@ -1,0 +1,12 @@
+package main;
+
+import requerimento.ConsultaBH;
+
+public class Principal {
+
+	ConsultaBH bh = new ConsultaBH();
+	
+	public static void main(String[] args) {
+		bh.
+	}
+}
