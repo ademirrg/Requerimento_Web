@@ -22,6 +22,7 @@ public class ConsultaBH {
 	}
 	
 	public void consultaHoras(){
+		//Login
 		driver.get("https://aplic.inmetrics.com.br//requerimento/content/login.php");
 		WebElement user = driver.findElement(By.id("fun_Id"));
 		user.sendKeys(cpf);
@@ -29,6 +30,7 @@ public class ConsultaBH {
 		pass.sendKeys(cpf);
 		WebElement btContinuar = driver.findElement(By.id("btnSubmitLogn"));
 		btContinuar.click();
+		//Pega valores
 		WebElement table = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]"));
 		String saldoBH  = table.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]/tbody/tr[9]/td")).getText();
 		String saldoBHSeparado[] = saldoBH.split(":");
