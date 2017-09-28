@@ -1,8 +1,5 @@
 package requerimento;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -34,19 +31,36 @@ public class ConsultaBH {
 		btContinuar.click();
 		WebElement table = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]"));
 		String saldoBH  = table.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]/tbody/tr[9]/td")).getText();
-		saldoBH.trim();
 		String saldoBHSeparado[] = saldoBH.split(":");
+		saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst("0", "");
+		saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst(" ", "");
 		saldoBH = saldoBHSeparado[1] + ":" + saldoBHSeparado[2];
+		saldoBH.trim();
+		//saldoBH = "22:00";
 		
-		try {
-			SimpleDateFormat t = new SimpleDateFormat("hh:mm a");
-			Date d = t.parse(saldoBH);
-			System.out.println(saldoBH + ">>>>>" + d);
-		
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(saldoBH.startsWith("-")){
+			System.out.println("Numero negativo");
+			float hora = Float.parseFloat(saldoBHSeparado[1]);
+			float minutos = Float.parseFloat(saldoBHSeparado[2]);
+			hora = hora * 60;
+			hora = hora - minutos;
+			System.out.println(hora);
 		}
+		
+		else{
+			System.out.println("Numero positivo");
+			float hora = Float.parseFloat(saldoBHSeparado[1]);
+			float minutos = Float.parseFloat(saldoBHSeparado[2]);
+			hora = hora * 60;
+			hora = hora + minutos;
+			System.out.println(hora);
+		}
+		
+		
+		
+		
+		
+	
 		
 		
 	}
