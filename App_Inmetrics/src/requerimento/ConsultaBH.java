@@ -55,13 +55,7 @@ public class ConsultaBH {
 			hora = hora + minutos;
 			System.out.println(hora);
 		}
-		
-		
-		
-		
-		
-	
-		
+			
 		
 	}
 	
