@@ -10,6 +10,17 @@ public class ConsultaBH {
 	
 	WebDriver driver;
 	String cpf = "36264448800";
+	int horaBH;
+	int minutosBH;
+	int horaExtra;
+	int minutosExtra;
+	int horaAtraso;
+	int minutosAtraso;
+	int horaFalta;
+	int horaCalc = 0;
+	int minutosCalc = 0;
+	String horaFinal;
+	String minutosFinal;
 	
 	public void abreBrowser(){
 		driver = new ChromeDriver();
@@ -34,34 +45,68 @@ public class ConsultaBH {
 		//Saldo do BH
 		WebElement tabelaSaldo = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]"));
 		String saldoBH  = tabelaSaldo.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]/tbody/tr[9]/td")).getText();
-		String saldoBHSeparado[] = saldoBH.split(":");
-		saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst("0", "");
-		saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst(" ", "");
-		saldoBH = saldoBHSeparado[1] + ":" + saldoBHSeparado[2];
-		saldoBH.trim();
-		float horaBH = Float.parseFloat(saldoBHSeparado[1]);
-		float minutosBH = Float.parseFloat(saldoBHSeparado[2]);
-		//saldoBH = "22:00";
+		
+		if(saldoBH.length()==0){
+			saldoBH = "00:00";
+			horaBH = 0;
+			minutosBH = 0;
+		}
+		
+		else{
+			String saldoBHSeparado[] = saldoBH.split(":");
+			saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst("0", "");
+			saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst(" ", "");
+			saldoBH = saldoBHSeparado[1] + ":" + saldoBHSeparado[2];
+			saldoBH.trim();
+			horaBH = Integer.parseInt(saldoBHSeparado[1]);
+			minutosBH = Integer.parseInt(saldoBHSeparado[2]);
+		}
 		
 		//T.HE
 		String saldoHoraExtra = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[5]")).getText();
-		String saldoHoraExtraSep[] = saldoHoraExtra.split(":");
-		float horaExtra = Float.parseFloat(saldoHoraExtraSep[0]);
-		float minutosExtra = Float.parseFloat(saldoHoraExtraSep[1]);
+		
+		if(saldoHoraExtra.length()==0){
+			saldoHoraExtra = "00:00";
+			horaExtra = 0;
+			minutosExtra = 0;
+		}
+		
+		else{
+			String saldoHoraExtraSep[] = saldoHoraExtra.split(":");
+			horaExtra = Integer.parseInt(saldoHoraExtraSep[0]);
+			minutosExtra = Integer.parseInt(saldoHoraExtraSep[1]);
+		}
 		
 		//T.Atrasos
 		String saldoAtraso = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[6]")).getText();
-		String saldoAtrasoSep[] = saldoAtraso.split(":");
-		float horaAtraso = Float.parseFloat(saldoAtrasoSep[0]);
-		float minutosAtraso = Float.parseFloat(saldoAtrasoSep[1]);
+		
+		if(saldoAtraso.length()==0){
+			saldoAtraso = "00:00";
+			horaAtraso = 0;
+			minutosAtraso = 0;
+		}
+		
+		else{
+			String saldoAtrasoSep[] = saldoAtraso.split(":");
+			horaAtraso = Integer.parseInt(saldoAtrasoSep[0]);
+			minutosAtraso = Integer.parseInt(saldoAtrasoSep[1]);
+		}
 		
 		//T.Faltas
 		String saldoFaltas = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[7]")).getText();
-		String saldoFaltasSep[] = saldoFaltas.split(":");
-		float horaFalta = Float.parseFloat(saldoFaltasSep[0]);
 		
-		if(saldoBH.startsWith("-")){
-			System.out.println("Numero negativo");
+		if(saldoFaltas.length()==0){
+			saldoFaltas = "00:00";
+			horaFalta = 0;
+		}
+		
+		else{
+			String saldoFaltasSep[] = saldoFaltas.split(":");
+			horaFalta = Integer.parseInt(saldoFaltasSep[0]);
+		}
+
+		//Cálculo das horas
+		if(horaBH < 0){
 			horaBH = horaBH * 60;
 			horaBH = horaBH - minutosBH;
 			horaExtra = horaExtra * 60 + minutosExtra;
@@ -70,11 +115,35 @@ public class ConsultaBH {
 			horaBH = horaBH - horaAtraso;
 			horaFalta = horaFalta * 60;
 			horaBH = horaBH - horaFalta;
-			System.out.println(horaBH/60);
+			
+			if(horaBH < 0){
+				for(int h = horaBH; h < -59; h = h + 60){
+					horaCalc = horaCalc -1;
+					minutosCalc = h + 60;
+				}
+			}
+			
+			else{
+				for(int h = horaBH; h > 59; h = h - 60){
+					horaCalc = horaCalc + 1;
+					minutosCalc = h - 60;
+				}
+			}
+			
+			if(minutosCalc < 0){
+				horaFinal = Integer.toString(horaCalc);
+				minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
+				System.out.println(horaFinal + ":" + minutosFinal);
+			}
+			
+			else{
+				horaFinal = Integer.toString(horaCalc);
+				minutosFinal = Integer.toString(minutosCalc);
+				System.out.println(horaFinal + ":" + minutosFinal);
+			}
 		}
 		
 		else{
-			System.out.println("Numero positivo");
 			horaBH = horaBH * 60;
 			horaBH = horaBH + minutosBH;
 			horaExtra = horaExtra * 60 + minutosExtra;
@@ -83,9 +152,33 @@ public class ConsultaBH {
 			horaBH = horaBH - horaAtraso;
 			horaFalta = horaFalta * 60;
 			horaBH = horaBH - horaFalta;
-			System.out.println(horaBH/60);
-		}
+
+			if(horaBH < 0){
+				for(int h = horaBH; h < -59; h = h + 60){
+					horaCalc = horaCalc -1;
+					minutosCalc = h + 60;
+				}
+			}
 			
+			else{
+				for(int h = horaBH; h > 59; h = h - 60){
+					horaCalc = horaCalc + 1;
+					minutosCalc = h - 60;
+				}
+			}
+
+			if(minutosCalc < 0){
+				horaFinal = Integer.toString(horaCalc);
+				minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
+				System.out.println(horaFinal + ":" + minutosFinal);
+			}
+			
+			else{
+				horaFinal = Integer.toString(horaCalc);
+				minutosFinal = Integer.toString(minutosCalc);
+				System.out.println(horaFinal + ":" + minutosFinal);
+			}
+		}	
 		
 	}
 	
