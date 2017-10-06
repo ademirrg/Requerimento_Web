@@ -38,7 +38,6 @@ public class ConsultaBH {
 			JOptionPane.showMessageDialog(null, "O Campo CPF deve conter 11 caracteres!", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
-		
 	}
 	
 	public void abreBrowser(){
