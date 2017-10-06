@@ -1,9 +1,8 @@
 package requerimento;
 
 import java.util.concurrent.TimeUnit;
-
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,9 +23,12 @@ public class ConsultaBH {
 	int minutosCalc = 0;
 	String horaFinal;
 	String minutosFinal;
+	String saldoFinal;
+	JFormattedTextField tCPF;
 	
 	public void digitaCPF(){
 		cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:","Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
+		
 		if(cpf.length() < 0){
 			System.exit(0);
 		}
@@ -124,7 +126,7 @@ public class ConsultaBH {
 		}
 	}
 	
-	public void calculaHoras(){
+	public void calculaHoras(){	
 		//Cálculo das horas
 		if(horaBH < 0){
 			horaBH = horaBH * 60;
@@ -142,7 +144,7 @@ public class ConsultaBH {
 		horaBH = horaBH - horaAtraso;
 		horaFalta = horaFalta * 60;
 		horaBH = horaBH - horaFalta;
-		
+
 		if(horaBH < 0){
 			for(int h = horaBH; h < -59; h = h + 60){
 				horaCalc = horaCalc -1;
@@ -169,22 +171,53 @@ public class ConsultaBH {
 			if(horaCalc == 0 && minutosCalc < 0){
 				horaFinal = "-" + Integer.toString(horaCalc);
 				minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
-				JOptionPane.showMessageDialog(null, "Seu saldo: " + 
-						horaFinal + ":" + minutosFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
+				
+				if(minutosFinal.length() < 2){
+					minutosFinal = "0" + minutosFinal;
+					saldoFinal = horaFinal + ":" + minutosFinal;
+					JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+							saldoFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
+				}
+				else{
+					saldoFinal = horaFinal + ":" + minutosFinal;
+					JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+							saldoFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			else{	
-			horaFinal = Integer.toString(horaCalc);
-			minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
-			JOptionPane.showMessageDialog(null, "Seu saldo: " + 
-					horaFinal + ":" + minutosFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
+				horaFinal = Integer.toString(horaCalc);
+				minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
+			
+				if(minutosFinal.length() < 2){
+					minutosFinal = "0" + minutosFinal;
+					saldoFinal = horaFinal + ":" + minutosFinal;
+					JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+							saldoFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
+				}
+				else{
+					saldoFinal = horaFinal + ":" + minutosFinal;
+					JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+							saldoFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 		
 		else{
 			horaFinal = Integer.toString(horaCalc);
 			minutosFinal = Integer.toString(minutosCalc);
-			JOptionPane.showMessageDialog(null, "Seu saldo: " + 
-					horaFinal + ":" + minutosFinal, "Consulta Banco de Horas", JOptionPane.INFORMATION_MESSAGE);
+			
+			if(minutosFinal.length() < 2){
+				minutosFinal = "0" + minutosFinal;
+				saldoFinal = horaFinal + ":" + minutosFinal;
+				JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+						saldoFinal, "Consulta Banco de Horas", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else{
+				saldoFinal = horaFinal + ":" + minutosFinal;
+				JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+						saldoFinal, "Consulta Banco de Horas", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
 		}
 	}	
 }
