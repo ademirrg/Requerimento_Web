@@ -12,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class ConsultaBH {
 	
 	WebDriver driver;
-	String cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:","Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
+	String cpf="";
 	int horaBH;
 	int minutosBH;
 	int horaExtra;
@@ -24,6 +24,22 @@ public class ConsultaBH {
 	int minutosCalc = 0;
 	String horaFinal;
 	String minutosFinal;
+	
+	public void digitaCPF(){
+		cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:","Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
+		if(cpf.length() < 0){
+			System.exit(0);
+		}
+		else if(cpf.length()== 0){
+			JOptionPane.showMessageDialog(null, "Campo CPF em branco!", "ERRO", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
+		else if(cpf.length() > 0 && cpf.length() < 11 || cpf.length() > 11){
+			JOptionPane.showMessageDialog(null, "O Campo CPF deve conter 11 caracteres!", "ERRO", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
+		
+	}
 	
 	public void abreBrowser(){
 		driver = new ChromeDriver();
