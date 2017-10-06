@@ -9,5 +9,6 @@ public class Principal {
 		bh.abreBrowser();
 		bh.consultaHoras();
 		bh.fechaBrowser();
+		bh.calculaHoras();
 	}
 }

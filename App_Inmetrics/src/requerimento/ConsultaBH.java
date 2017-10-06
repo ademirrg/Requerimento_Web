@@ -1,6 +1,9 @@
 package requerimento;
 
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JOptionPane;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class ConsultaBH {
 	
 	WebDriver driver;
-	String cpf = "";
+	String cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:","Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
 	int horaBH;
 	int minutosBH;
 	int horaExtra;
@@ -104,7 +107,9 @@ public class ConsultaBH {
 			String saldoFaltasSep[] = saldoFaltas.split(":");
 			horaFalta = Integer.parseInt(saldoFaltasSep[0]);
 		}
-
+	}
+	
+	public void calculaHoras(){
 		//Cálculo das horas
 		if(horaBH < 0){
 			horaBH = horaBH * 60;
@@ -149,19 +154,22 @@ public class ConsultaBH {
 			if(horaCalc == 0 && minutosCalc < 0){
 				horaFinal = "-" + Integer.toString(horaCalc);
 				minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
-				System.out.println(horaFinal + ":" + minutosFinal);
+				JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+						horaFinal + ":" + minutosFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
 			}
 			else{	
 			horaFinal = Integer.toString(horaCalc);
 			minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
-			System.out.println(horaFinal + ":" + minutosFinal);
+			JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+					horaFinal + ":" + minutosFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		
 		else{
 			horaFinal = Integer.toString(horaCalc);
 			minutosFinal = Integer.toString(minutosCalc);
-			System.out.println(horaFinal + ":" + minutosFinal);
+			JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+					horaFinal + ":" + minutosFinal, "Consulta Banco de Horas", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}	
 }
