@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class ConsultaBH {
 	
 	WebDriver driver;
-	String cpf = "36264448800";
+	String cpf = "";
 	int horaBH;
 	int minutosBH;
 	int horaExtra;
@@ -109,77 +109,59 @@ public class ConsultaBH {
 		if(horaBH < 0){
 			horaBH = horaBH * 60;
 			horaBH = horaBH - minutosBH;
-			horaExtra = horaExtra * 60 + minutosExtra;
-			horaBH = horaBH + horaExtra;
-			horaAtraso = horaAtraso * 60 + minutosAtraso;
-			horaBH = horaBH - horaAtraso;
-			horaFalta = horaFalta * 60;
-			horaBH = horaBH - horaFalta;
-			
-			if(horaBH < 0){
-				for(int h = horaBH; h < -59; h = h + 60){
-					horaCalc = horaCalc -1;
-					minutosCalc = h + 60;
-				}
-			}
-			
-			else{
-				for(int h = horaBH; h > 59; h = h - 60){
-					horaCalc = horaCalc + 1;
-					minutosCalc = h - 60;
-				}
-			}
-			
-			if(minutosCalc < 0){
-				horaFinal = Integer.toString(horaCalc);
-				minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
-				System.out.println(horaFinal + ":" + minutosFinal);
-			}
-			
-			else{
-				horaFinal = Integer.toString(horaCalc);
-				minutosFinal = Integer.toString(minutosCalc);
-				System.out.println(horaFinal + ":" + minutosFinal);
-			}
 		}
 		
 		else{
 			horaBH = horaBH * 60;
 			horaBH = horaBH + minutosBH;
-			horaExtra = horaExtra * 60 + minutosExtra;
-			horaBH = horaBH + horaExtra;
-			horaAtraso = horaAtraso * 60 + minutosAtraso;
-			horaBH = horaBH - horaAtraso;
-			horaFalta = horaFalta * 60;
-			horaBH = horaBH - horaFalta;
-
-			if(horaBH < 0){
-				for(int h = horaBH; h < -59; h = h + 60){
-					horaCalc = horaCalc -1;
-					minutosCalc = h + 60;
-				}
+		}
+		
+		horaExtra = horaExtra * 60 + minutosExtra;
+		horaBH = horaBH + horaExtra;
+		horaAtraso = horaAtraso * 60 + minutosAtraso;
+		horaBH = horaBH - horaAtraso;
+		horaFalta = horaFalta * 60;
+		horaBH = horaBH - horaFalta;
+		
+		if(horaBH < 0){
+			for(int h = horaBH; h < -59; h = h + 60){
+				horaCalc = horaCalc -1;
+				minutosCalc = h + 60;
 			}
 			
-			else{
-				for(int h = horaBH; h > 59; h = h - 60){
-					horaCalc = horaCalc + 1;
-					minutosCalc = h - 60;
-				}
+			if(horaBH >= -59){
+				minutosCalc = horaBH;
 			}
-
-			if(minutosCalc < 0){
-				horaFinal = Integer.toString(horaCalc);
+		}
+		
+		else{
+			for(int h = horaBH; h > 59; h = h - 60){
+				horaCalc = horaCalc + 1;
+				minutosCalc = h - 60;
+			}
+				
+			if(horaBH <= 59){
+				minutosCalc = horaBH;
+			}
+		}
+		
+		if(minutosCalc < 0){
+			if(horaCalc == 0 && minutosCalc < 0){
+				horaFinal = "-" + Integer.toString(horaCalc);
 				minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
 				System.out.println(horaFinal + ":" + minutosFinal);
 			}
-			
-			else{
-				horaFinal = Integer.toString(horaCalc);
-				minutosFinal = Integer.toString(minutosCalc);
-				System.out.println(horaFinal + ":" + minutosFinal);
+			else{	
+			horaFinal = Integer.toString(horaCalc);
+			minutosFinal = Integer.toString(minutosCalc).replaceAll("-", "");
+			System.out.println(horaFinal + ":" + minutosFinal);
 			}
-		}	
+		}
 		
-	}
-	
+		else{
+			horaFinal = Integer.toString(horaCalc);
+			minutosFinal = Integer.toString(minutosCalc);
+			System.out.println(horaFinal + ":" + minutosFinal);
+		}
+	}	
 }
