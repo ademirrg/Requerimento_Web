@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -62,24 +63,32 @@ public class ConsultaBH {
 		WebElement btContinuar = driver.findElement(By.id("btnSubmitLogn"));
 		btContinuar.click();
 		
+		try{
 		//Saldo do BH
-		WebElement tabelaSaldo = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]"));
-		String saldoBH  = tabelaSaldo.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]/tbody/tr[9]/td")).getText();
-		
-		if(saldoBH.length()==0){
-			saldoBH = "00:00";
-			horaBH = 0;
-			minutosBH = 0;
+			WebElement tabelaSaldo = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]"));
+			String saldoBH  = tabelaSaldo.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]/tbody/tr[9]/td")).getText();
+			
+			if(saldoBH.length()==0){
+				saldoBH = "00:00";
+				horaBH = 0;
+				minutosBH = 0;
+			}
+			
+			else{
+				String saldoBHSeparado[] = saldoBH.split(":");
+				saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst("0", "");
+				saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst(" ", "");
+				saldoBH = saldoBHSeparado[1] + ":" + saldoBHSeparado[2];
+				saldoBH.trim();
+				horaBH = Integer.parseInt(saldoBHSeparado[1]);
+				minutosBH = Integer.parseInt(saldoBHSeparado[2]);
+			}
 		}
-		
-		else{
-			String saldoBHSeparado[] = saldoBH.split(":");
-			saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst("0", "");
-			saldoBHSeparado[1] = saldoBHSeparado[1].replaceFirst(" ", "");
-			saldoBH = saldoBHSeparado[1] + ":" + saldoBHSeparado[2];
-			saldoBH.trim();
-			horaBH = Integer.parseInt(saldoBHSeparado[1]);
-			minutosBH = Integer.parseInt(saldoBHSeparado[2]);
+		catch(NoSuchElementException e){
+			driver.quit();
+			JOptionPane.showMessageDialog(null, "Problemas ao realizar login.\nVerifique se o CPF informado está correto: " 
+			+ cpf, "ERRO", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
 		}
 		
 		//T.HE
