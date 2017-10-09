@@ -1,7 +1,9 @@
 package requerimento;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.concurrent.TimeUnit;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -25,7 +27,6 @@ public class ConsultaBH {
 	String horaFinal;
 	String minutosFinal;
 	String saldoFinal;
-	JFormattedTextField tCPF;
 	
 	public void digitaCPF(){
 		cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:","Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
@@ -44,11 +45,27 @@ public class ConsultaBH {
 	}
 	
 	public void abreBrowser(){
-	    System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
+		try{
+		System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		}
+		catch(IllegalStateException e){
+			JOptionPane.showMessageDialog(null, "Ops!\nParece que você não tem o chromedriver em sua máquina!"
+					+ "\nPara utilizar esta aplicação, baixe a versão mais recente do chromedriver no link abaixo:"
+					+ "\nhttps://sites.google.com/a/chromium.org/chromedriver/downloads"
+					+ "\nApós baixar o arquivo chromedriver.exe, coloque-o no diretório C: e execute a aplicação."
+					+ "\nClique em OK e o link será copiado para sua área de transferência, após isso, apenas cole (Ctrl+V) na página do seu navegador.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+			
+			String link = "https://sites.google.com/a/chromium.org/chromedriver/downloads";
+			StringSelection selectlLink = new StringSelection(link);
+			Clipboard areaTransfer = Toolkit.getDefaultToolkit().getSystemClipboard();
+			areaTransfer.setContents(selectlLink, null);
+			System.exit(0);
+		}
 	}
+		
 	
 	public void fechaBrowser(){
 		driver.quit();
