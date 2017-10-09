@@ -44,6 +44,7 @@ public class ConsultaBH {
 	}
 	
 	public void abreBrowser(){
+	    System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
