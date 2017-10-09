@@ -56,16 +56,14 @@ public class ConsultaBH {
 					+ "\nPara utilizar esta aplicação, baixe a versão mais recente do chromedriver no link abaixo:"
 					+ "\nhttps://sites.google.com/a/chromium.org/chromedriver/downloads"
 					+ "\nApós baixar o arquivo chromedriver.exe, coloque-o no diretório C: e execute a aplicação."
-					+ "\nClique em OK e o link será copiado para sua área de transferência, após isso, apenas cole (Ctrl+V) na página do seu navegador.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-			
+					+ "\nClique em OK e o link será copiado para sua área de transferência, após isso, apenas cole (Ctrl+V) na página do seu navegador.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);	
 			String link = "https://sites.google.com/a/chromium.org/chromedriver/downloads";
 			StringSelection selectlLink = new StringSelection(link);
 			Clipboard areaTransfer = Toolkit.getDefaultToolkit().getSystemClipboard();
 			areaTransfer.setContents(selectlLink, null);
 			System.exit(0);
 		}
-	}
-		
+	}	
 	
 	public void fechaBrowser(){
 		driver.quit();
