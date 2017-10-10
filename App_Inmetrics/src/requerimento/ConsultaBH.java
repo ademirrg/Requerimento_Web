@@ -54,7 +54,7 @@ public class ConsultaBH {
 		catch(IllegalStateException e){
 			JOptionPane.showMessageDialog(null, "Ops!\nParece que você não tem o chromedriver em sua máquina!"
 					+ "\nPara utilizar esta aplicação, baixe a versão mais recente do chromedriver no link abaixo:"
-					+ "\nhttps://sites.google.com/a/chromium.org/chromedriver/downloads"
+					+ "\n<html><span style ='color:blue'>https://sites.google.com/a/chromium.org/chromedriver/downloads</span></html>"
 					+ "\nApós baixar o arquivo chromedriver.exe, coloque-o no diretório C: e execute a aplicação."
 					+ "\nClique em OK e o link será copiado para sua área de transferência, após isso, apenas cole (Ctrl+V) na página do seu navegador.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);	
 			String link = "https://sites.google.com/a/chromium.org/chromedriver/downloads";
