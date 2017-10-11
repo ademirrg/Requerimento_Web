@@ -29,7 +29,7 @@ public class ConsultaBH {
 	String saldoFinal;
 	
 	public void digitaCPF(){
-		cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:","Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
+		cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:", "Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
 		
 		if(cpf == null){
 			System.exit(0);
