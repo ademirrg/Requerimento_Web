@@ -31,7 +31,7 @@ public class ConsultaBH {
 	public void digitaCPF(){
 		cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:","Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
 		
-		if(cpf.length() < 0){
+		if(cpf == null){
 			System.exit(0);
 		}
 		else if(cpf.length()== 0){
