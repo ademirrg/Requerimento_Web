@@ -227,6 +227,23 @@ public class ConsultaBH {
 			}
 		}
 		
+		else if(horaBH < 0){
+			horaFinal = Integer.toString(horaCalc);
+			minutosFinal = Integer.toString(minutosCalc);
+			
+			if(minutosFinal.length() < 2){
+				minutosFinal = "0" + minutosFinal;
+				saldoFinal = horaFinal + ":" + minutosFinal;
+				JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+						saldoFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
+			}
+			else{
+				saldoFinal = horaFinal + ":" + minutosFinal;
+				JOptionPane.showMessageDialog(null, "Seu saldo: " + 
+						saldoFinal, "Consulta Banco de Horas", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
 		else{
 			horaFinal = Integer.toString(horaCalc);
 			minutosFinal = Integer.toString(minutosCalc);
