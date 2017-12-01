@@ -79,8 +79,8 @@ public class ConsultaBH {
 		WebElement btContinuar = driver.findElement(By.id("btnSubmitLogn"));
 		btContinuar.click();
 		
-		try{
 		//Saldo do BH
+		try{
 			WebElement tabelaSaldo = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]"));
 			String saldoBH  = tabelaSaldo.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]/tbody/tr[9]/td")).getText();
 			
