@@ -108,19 +108,27 @@ public class ConsultaBH {
 		}
 		
 		//T.HE
-		String saldoHoraExtra = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[5]")).getText();
-		
-		if(saldoHoraExtra.length()==0){
-			saldoHoraExtra = "00:00";
-			horaExtra = 0;
-			minutosExtra = 0;
+		try{
+			String saldoHoraExtra = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[5]")).getText();
+			
+			if(saldoHoraExtra.length()==0){
+				saldoHoraExtra = "00:00";
+				horaExtra = 0;
+				minutosExtra = 0;
+			}
+			
+			else{
+				String saldoHoraExtraSep[] = saldoHoraExtra.split(":");
+				horaExtra = Integer.parseInt(saldoHoraExtraSep[0]);
+				minutosExtra = Integer.parseInt(saldoHoraExtraSep[1]);
+			}
 		}
-		
-		else{
-			String saldoHoraExtraSep[] = saldoHoraExtra.split(":");
-			horaExtra = Integer.parseInt(saldoHoraExtraSep[0]);
-			minutosExtra = Integer.parseInt(saldoHoraExtraSep[1]);
-		}
+		catch(NoSuchElementException e){
+			driver.quit();
+			JOptionPane.showMessageDialog(null, "Cálculo de horas ainda não disponível devido a troca recente de período!"
+					+ "\nEspere até que a linha de frequencia seja preenchida no site e tente novamente.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+			System.exit(0);
+		}	
 		
 		//T.Atrasos
 		String saldoAtraso = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[6]")).getText();
