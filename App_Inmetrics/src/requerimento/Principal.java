@@ -6,6 +6,7 @@ public class Principal {
 		ConsultaBH bh = new ConsultaBH();
 		bh.digitaCPF();
 		bh.abreBrowser();
+		bh.login();
 		bh.consultaHoras();
 		bh.fechaBrowser();
 		bh.calculaHoras();

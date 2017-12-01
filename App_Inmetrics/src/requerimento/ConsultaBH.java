@@ -3,6 +3,8 @@ package requerimento;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 import org.openqa.selenium.By;
@@ -10,6 +12,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class ConsultaBH {
 	
@@ -69,7 +72,8 @@ public class ConsultaBH {
 		driver.quit();
 	}
 	
-	public void consultaHoras(){
+	public void login(){
+		
 		//Login
 		driver.get("https://aplic.inmetrics.com.br//requerimento/content/login.php");
 		WebElement user = driver.findElement(By.id("fun_Id"));
@@ -79,6 +83,9 @@ public class ConsultaBH {
 		WebElement btContinuar = driver.findElement(By.id("btnSubmitLogn"));
 		btContinuar.click();
 		
+	}
+		
+	public void consultaHoras(){	
 		//Saldo do BH
 		try{
 			WebElement tabelaSaldo = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[2]/td/table[1]"));
@@ -124,9 +131,10 @@ public class ConsultaBH {
 			}
 		}
 		catch(NoSuchElementException e){
-			driver.quit();
+			//driver.quit();
 			JOptionPane.showMessageDialog(null, "Cálculo de horas ainda não disponível devido a troca recente de período!"
-					+ "\nEspere até que a linha de frequencia seja preenchida no site e tente novamente.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+					+ "\nSerá consultado o período anterior.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+			consultaPeriodoAnterior();
 			System.exit(0);
 		}	
 		
@@ -269,5 +277,24 @@ public class ConsultaBH {
 			}
 			
 		}
-	}	
+	}
+	
+	public void consultaPeriodoAnterior(){
+		//Altera período
+		WebElement altPeriodo = driver.findElement(By.xpath("//*[@id=\"frequencia\"]/tbody/tr[3]/td/input[2]"));
+		altPeriodo.click();
+		GregorianCalendar cal = new GregorianCalendar();
+		int mes = cal.get(Calendar.MONTH);
+		int ano = cal.get(Calendar.YEAR);
+		Integer.toString(mes);
+		Integer.toString(ano);
+		String mesPeriodo = mes + "/" + ano;
+		Select cbPeriodo = new Select(driver.findElement(By.name("refCompetencia")));
+		cbPeriodo.selectByValue(mesPeriodo);
+		WebElement btAltPeriodo = driver.findElement(By.xpath("/html/body/form/table/tbody/tr[2]/td/table/tbody/tr[3]/td/input[1]"));
+		btAltPeriodo.click();
+		consultaHoras();
+		driver.quit();
+		calculaHoras();
+	}
 }
