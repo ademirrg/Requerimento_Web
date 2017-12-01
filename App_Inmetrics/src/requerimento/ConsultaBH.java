@@ -73,8 +73,6 @@ public class ConsultaBH {
 	}
 	
 	public void login(){
-		
-		//Login
 		driver.get("https://aplic.inmetrics.com.br//requerimento/content/login.php");
 		WebElement user = driver.findElement(By.id("fun_Id"));
 		user.sendKeys(cpf);
