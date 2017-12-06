@@ -79,8 +79,7 @@ public class ConsultaBH {
 		WebElement pass = driver.findElement(By.id("fun_Senha"));
 		pass.sendKeys(cpf);
 		WebElement btContinuar = driver.findElement(By.id("btnSubmitLogn"));
-		btContinuar.click();
-		
+		btContinuar.click();	
 	}
 		
 	public void consultaHoras(){	
