@@ -39,11 +39,11 @@ public class ConsultaBH {
 		}
 		else if(cpf.length()== 0){
 			JOptionPane.showMessageDialog(null, "Campo CPF em branco!", "ERRO", JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
+			digitaCPF();
 		}
 		else if(cpf.length() > 0 && cpf.length() < 11 || cpf.length() > 11){
 			JOptionPane.showMessageDialog(null, "O Campo CPF deve conter 11 caracteres!", "ERRO", JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
+			digitaCPF();
 		}
 	}
 	
