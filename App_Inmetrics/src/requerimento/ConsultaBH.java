@@ -87,7 +87,8 @@ public class ConsultaBH {
 				driver.quit();
 				JOptionPane.showMessageDialog(null, "Problemas ao realizar login!\nVerifique se o CPF informado está correto: " 
 						+ cpf, "ERRO", JOptionPane.ERROR_MESSAGE);
-				Principal.main(null);
+				Principal.main(new String[]{});
+				System.exit(0);
 			}
 		}
 		catch(NoSuchElementException e){
