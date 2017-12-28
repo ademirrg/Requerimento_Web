@@ -52,7 +52,7 @@ public class ConsultaBH {
 			System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
 			driver = new ChromeDriver();
 			driver.manage().window().maximize();
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		}
 		catch(IllegalStateException e){
 			JOptionPane.showMessageDialog(null, "Ops!\nParece que você não tem o chromedriver em sua máquina!"
@@ -95,6 +95,16 @@ public class ConsultaBH {
 			driver.quit();
 			JOptionPane.showMessageDialog(null, "Erro ao processar solicitação de login!"
 					+ "\nProblemas de conexão com a internet ou elemento não encontrado na página.", "ERRO", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
+		catch(NullPointerException e2){
+			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
+			driver.quit();
+			System.exit(0);
+		}
+		catch(org.openqa.selenium.NoSuchWindowException e3){
+			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
+			driver.quit();
 			System.exit(0);
 		}
 	}
