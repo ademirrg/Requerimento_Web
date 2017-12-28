@@ -97,14 +97,9 @@ public class ConsultaBH {
 					+ "\nProblemas de conexão com a internet ou elemento não encontrado na página.", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
-		catch(NullPointerException e2){
-			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
+		catch(org.openqa.selenium.NoSuchWindowException | NullPointerException e2){
 			driver.quit();
-			System.exit(0);
-		}
-		catch(org.openqa.selenium.NoSuchWindowException e3){
 			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
-			driver.quit();
 			System.exit(0);
 		}
 	}
@@ -137,6 +132,11 @@ public class ConsultaBH {
 					+ "\nProblemas de conexão com a internet ou elemento não encontrado na página.", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
+		catch(org.openqa.selenium.NoSuchWindowException | NullPointerException e2){
+			driver.quit();
+			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 		
 		//T.HE
 		try{
@@ -160,7 +160,12 @@ public class ConsultaBH {
 					+ "\nSerá consultado o período anterior.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
 			consultaPeriodoAnterior();
 			System.exit(0);
-		}	
+		}
+		catch(org.openqa.selenium.NoSuchWindowException | NullPointerException e2){
+			driver.quit();
+			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 		
 		//T.Atrasos
 		String saldoAtraso = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[6]")).getText();
@@ -325,6 +330,11 @@ public class ConsultaBH {
 			driver.quit();
 			JOptionPane.showMessageDialog(null, "Erro ao processar solicitação de alteração de período!"
 					+ "\nProblemas de conexão com a internet ou elemento não encontrado na página.", "ERRO", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
+		catch(org.openqa.selenium.NoSuchWindowException | NullPointerException e2){
+			driver.quit();
+			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
 	}
