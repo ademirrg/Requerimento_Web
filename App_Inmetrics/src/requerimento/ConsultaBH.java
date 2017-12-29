@@ -124,6 +124,10 @@ public class ConsultaBH {
 				saldoBH.trim();
 				horaBH = Integer.parseInt(saldoBHSeparado[1]);
 				minutosBH = Integer.parseInt(saldoBHSeparado[2]);
+				if(saldoBHSeparado[1].contains("-") && horaBH == 0){
+					saldoBHSeparado[2] = "-" + saldoBHSeparado[2];
+					minutosBH = Integer.parseInt(saldoBHSeparado[2]);
+				}
 			}
 		}
 		catch(NoSuchElementException e){
