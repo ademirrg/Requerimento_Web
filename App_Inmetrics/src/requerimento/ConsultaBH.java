@@ -52,7 +52,7 @@ public class ConsultaBH {
 			System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
 			driver = new ChromeDriver();
 			driver.manage().window().maximize();
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		}
 		catch(IllegalStateException e){
 			JOptionPane.showMessageDialog(null, "Ops!\nParece que você não tem o chromedriver em sua máquina!"
