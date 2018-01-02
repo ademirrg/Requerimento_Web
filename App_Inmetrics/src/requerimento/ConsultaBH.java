@@ -321,6 +321,10 @@ public class ConsultaBH {
 			int ano = cal.get(Calendar.YEAR);
 			Integer.toString(mes);
 			Integer.toString(ano);
+			if(mes == 0){
+				ano = ano - 1;
+				mes = 12;
+			}
 			String mesPeriodo = mes + "/" + ano;
 			Select cbPeriodo = new Select(driver.findElement(By.name("refCompetencia")));
 			cbPeriodo.selectByValue(mesPeriodo);
