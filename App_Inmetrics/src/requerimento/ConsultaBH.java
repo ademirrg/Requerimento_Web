@@ -41,6 +41,11 @@ public class ConsultaBH {
 			JOptionPane.showMessageDialog(null, "Campo CPF em branco!", "ERRO", JOptionPane.ERROR_MESSAGE);
 			digitaCPF();
 		}
+		else if(cpf.equalsIgnoreCase("INFO")){
+			JOptionPane.showMessageDialog(null, "APLICAÇÃO CRIADA POR: ADEMIR ROCHA GARCIA\n"
+					+ "DATA DE CRIAÇÃO: 27/09/2017", "INFORMAÇÕES", JOptionPane.INFORMATION_MESSAGE);
+			digitaCPF();
+		}
 		else if(cpf.length() > 0 && cpf.length() < 11 || cpf.length() > 11){
 			JOptionPane.showMessageDialog(null, "O Campo CPF deve conter 11 caracteres!", "ERRO", JOptionPane.ERROR_MESSAGE);
 			digitaCPF();
