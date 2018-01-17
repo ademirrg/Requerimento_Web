@@ -43,7 +43,8 @@ public class ConsultaBH {
 		}
 		else if(cpf.equalsIgnoreCase("INFO")){
 			JOptionPane.showMessageDialog(null, "APLICA플O CRIADA POR: ADEMIR ROCHA GARCIA\n"
-					+ "DATA DE CRIA플O: 27/09/2017", "INFORMA합ES", JOptionPane.INFORMATION_MESSAGE);
+					+ "DATA DE CRIA플O: 27/09/2017\n"
+					+ "VERS홒: 1.0", "INFORMA합ES", JOptionPane.INFORMATION_MESSAGE);
 			digitaCPF();
 		}
 		else if(cpf.length() > 0 && cpf.length() < 11 || cpf.length() > 11){
