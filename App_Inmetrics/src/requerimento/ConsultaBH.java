@@ -332,6 +332,9 @@ public class ConsultaBH {
 				mes = 12;
 			}
 			String mesPeriodo = mes + "/" + ano;
+			if(mesPeriodo.length() < 7){
+				mesPeriodo = "0" + mesPeriodo;
+			}
 			Select cbPeriodo = new Select(driver.findElement(By.name("refCompetencia")));
 			cbPeriodo.selectByValue(mesPeriodo);
 			WebElement btAltPeriodo = driver.findElement(By.xpath("/html/body/form/table/tbody/tr[2]/td/table/tbody/tr[3]/td/input[1]"));
