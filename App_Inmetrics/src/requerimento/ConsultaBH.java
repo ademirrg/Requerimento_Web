@@ -89,6 +89,7 @@ public class ConsultaBH {
 			WebElement btContinuar = driver.findElement(By.id("btnSubmitLogn"));
 			btContinuar.click();	
 			boolean userInvalido = driver.getPageSource().contains("Problemas! Usuário ou senha divergente!");
+			boolean trocaPeriodo = driver.getPageSource().contains("Nenhum registro encontrado");
 			
 			if(userInvalido == true){
 				driver.quit();
@@ -97,7 +98,7 @@ public class ConsultaBH {
 				Principal.main(new String[]{});
 				System.exit(0);
 			}
-			else if(driver.getPageSource().contains("Nenhum registro encontrado")) {
+			else if(trocaPeriodo == true) {
 				JOptionPane.showMessageDialog(null, "Cálculo de horas ainda não disponível devido a troca recente de período!"
 						+ "\nSerá consultado o período anterior.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
 				consultaPeriodoAnterior();
