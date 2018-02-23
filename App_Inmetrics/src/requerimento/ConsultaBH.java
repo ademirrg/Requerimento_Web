@@ -89,11 +89,18 @@ public class ConsultaBH {
 			WebElement btContinuar = driver.findElement(By.id("btnSubmitLogn"));
 			btContinuar.click();	
 			boolean userInvalido = driver.getPageSource().contains("Problemas! Usuário ou senha divergente!");
+			
 			if(userInvalido == true){
 				driver.quit();
 				JOptionPane.showMessageDialog(null, "Problemas ao realizar login!\nVerifique se o CPF informado está correto: " 
 						+ cpf, "ERRO", JOptionPane.ERROR_MESSAGE);
 				Principal.main(new String[]{});
+				System.exit(0);
+			}
+			else if(driver.getPageSource().contains("Nenhum registro encontrado")) {
+				JOptionPane.showMessageDialog(null, "Cálculo de horas ainda não disponível devido a troca recente de período!"
+						+ "\nSerá consultado o período anterior.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+				consultaPeriodoAnterior();
 				System.exit(0);
 			}
 		}
@@ -135,21 +142,8 @@ public class ConsultaBH {
 					minutosBH = Integer.parseInt(saldoBHSeparado[2]);
 				}
 			}
-		}
-		catch(NoSuchElementException e){
-			driver.quit();
-			JOptionPane.showMessageDialog(null, "Erro ao processar solicitação de consulta do banco de horas!"
-					+ "\nProblemas de conexão com a internet ou elemento não encontrado na página.", "ERRO", JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
-		}
-		catch(org.openqa.selenium.NoSuchWindowException | NullPointerException e2){
-			driver.quit();
-			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
-		}
 		
-		//T.HE
-		try{
+			//T.HE
 			String saldoHoraExtra = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[5]")).getText();
 			
 			if(saldoHoraExtra.length()==0){
@@ -163,46 +157,45 @@ public class ConsultaBH {
 				horaExtra = Integer.parseInt(saldoHoraExtraSep[0]);
 				minutosExtra = Integer.parseInt(saldoHoraExtraSep[1]);
 			}
+			
+			//T.Atrasos
+			String saldoAtraso = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[6]")).getText();
+			
+			if(saldoAtraso.length()==0){
+				saldoAtraso = "00:00";
+				horaAtraso = 0;
+				minutosAtraso = 0;
+			}
+			
+			else{
+				String saldoAtrasoSep[] = saldoAtraso.split(":");
+				horaAtraso = Integer.parseInt(saldoAtrasoSep[0]);
+				minutosAtraso = Integer.parseInt(saldoAtrasoSep[1]);
+			}
+			
+			//T.Faltas
+			String saldoFaltas = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[7]")).getText();
+			
+			if(saldoFaltas.length()==0){
+				saldoFaltas = "00:00";
+				horaFalta = 0;
+			}
+			
+			else{
+				String saldoFaltasSep[] = saldoFaltas.split(":");
+				horaFalta = Integer.parseInt(saldoFaltasSep[0]);
+			}
 		}
 		catch(NoSuchElementException e){
-			//driver.quit();
-			JOptionPane.showMessageDialog(null, "Cálculo de horas ainda não disponível devido a troca recente de período!"
-					+ "\nSerá consultado o período anterior.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-			consultaPeriodoAnterior();
+			driver.quit();
+			JOptionPane.showMessageDialog(null, "Erro ao processar solicitação de consulta do banco de horas!"
+					+ "\nProblemas de conexão com a internet ou elemento não encontrado na página.", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
 		catch(org.openqa.selenium.NoSuchWindowException | NullPointerException e2){
 			driver.quit();
 			JOptionPane.showMessageDialog(null, "Browser fechado!\nA aplicação será encerrada.", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
-		}
-		
-		//T.Atrasos
-		String saldoAtraso = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[6]")).getText();
-		
-		if(saldoAtraso.length()==0){
-			saldoAtraso = "00:00";
-			horaAtraso = 0;
-			minutosAtraso = 0;
-		}
-		
-		else{
-			String saldoAtrasoSep[] = saldoAtraso.split(":");
-			horaAtraso = Integer.parseInt(saldoAtrasoSep[0]);
-			minutosAtraso = Integer.parseInt(saldoAtrasoSep[1]);
-		}
-		
-		//T.Faltas
-		String saldoFaltas = driver.findElement(By.xpath("//*[@id=\"tbDivergencias\"]/tbody/tr/td[7]")).getText();
-		
-		if(saldoFaltas.length()==0){
-			saldoFaltas = "00:00";
-			horaFalta = 0;
-		}
-		
-		else{
-			String saldoFaltasSep[] = saldoFaltas.split(":");
-			horaFalta = Integer.parseInt(saldoFaltasSep[0]);
 		}
 	}
 	
