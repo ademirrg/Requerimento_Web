@@ -98,7 +98,7 @@ public class ConsultaBH {
 				Principal.main(new String[]{});
 				System.exit(0);
 			}
-			else if(trocaPeriodo == true) {
+			else if(trocaPeriodo == true){
 				JOptionPane.showMessageDialog(null, "Cálculo de horas ainda não disponível devido a troca recente de período!"
 						+ "\nSerá consultado o período anterior.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
 				consultaPeriodoAnterior();
