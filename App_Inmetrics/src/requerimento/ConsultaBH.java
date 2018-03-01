@@ -30,6 +30,7 @@ public class ConsultaBH {
 	String horaFinal;
 	String minutosFinal;
 	String saldoFinal;
+	String versao = "1.1";
 	
 	public void digitaCPF(){
 		cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:", "Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
@@ -44,7 +45,7 @@ public class ConsultaBH {
 		else if(cpf.equalsIgnoreCase("INFO")){
 			JOptionPane.showMessageDialog(null, "APLICAÇÃO CRIADA POR: ADEMIR ROCHA GARCIA\n"
 					+ "DATA DE CRIAÇÃO: 27/09/2017\n"
-					+ "VERSÃO: 1.0", "INFORMAÇÕES", JOptionPane.INFORMATION_MESSAGE);
+					+ "VERSÃO: " + versao, "INFORMAÇÕES", JOptionPane.INFORMATION_MESSAGE);
 			digitaCPF();
 		}
 		else if(cpf.length() > 0 && cpf.length() < 11 || cpf.length() > 11){
