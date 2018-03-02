@@ -100,10 +100,18 @@ public class ConsultaBH {
 				System.exit(0);
 			}
 			else if(trocaPeriodo == true){
-				JOptionPane.showMessageDialog(null, "Cálculo de horas ainda não disponível devido a troca recente de período!"
-						+ "\nSerá consultado o período anterior.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-				consultaPeriodoAnterior();
-				System.exit(0);
+				int confirmaConsultaPeriodoAnterior = JOptionPane.showConfirmDialog(null, "O cálculo de horas ainda não está disponível devido a troca recente de período!"
+						+ "\nDeseja consultar o período anterior?", "Consulta Banco de Horas", JOptionPane.WARNING_MESSAGE);
+			
+				if(confirmaConsultaPeriodoAnterior == 0) {
+					consultaPeriodoAnterior();
+					System.exit(0);
+				}
+				else {
+					driver.quit();
+					JOptionPane.showMessageDialog(null, "A aplicação será encerrada.", "Consulta Banco de Horas", JOptionPane.INFORMATION_MESSAGE);
+					System.exit(0);
+				}
 			}
 		}
 		catch(NoSuchElementException e){
