@@ -3,10 +3,16 @@ package requerimento;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.text.MaskFormatter;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +24,7 @@ public class ConsultaBH {
 	
 	WebDriver driver;
 	String cpf="";
+	String cpfFormatado="";
 	int horaBH;
 	int minutosBH;
 	int horaExtra;
@@ -30,27 +37,58 @@ public class ConsultaBH {
 	String horaFinal;
 	String minutosFinal;
 	String saldoFinal;
-	String versao = "1.1";
+	String versao = "2.0";
 	
 	public void digitaCPF(){
-		cpf = JOptionPane.showInputDialog(null, "Digite seu CPF:", "Consulta Banco de Horas", JOptionPane.QUESTION_MESSAGE);
 		
-		if(cpf == null){
-			System.exit(0);
-		}
-		else if(cpf.length()== 0){
-			JOptionPane.showMessageDialog(null, "Campo CPF em branco!", "ERRO", JOptionPane.ERROR_MESSAGE);
-			digitaCPF();
-		}
-		else if(cpf.equalsIgnoreCase("INFO")){
-			JOptionPane.showMessageDialog(null, "APLICAÇÃO CRIADA POR: ADEMIR ROCHA GARCIA\n"
-					+ "DATA DE CRIAÇÃO: 27/09/2017\n"
-					+ "VERSÃO: " + versao, "INFORMAÇÕES", JOptionPane.INFORMATION_MESSAGE);
-			digitaCPF();
-		}
-		else if(cpf.length() > 0 && cpf.length() < 11 || cpf.length() > 11){
-			JOptionPane.showMessageDialog(null, "O Campo CPF deve conter 11 caracteres!", "ERRO", JOptionPane.ERROR_MESSAGE);
-			digitaCPF();
+		try {
+			Object[] opcoes = { "OK", "Cancelar", "?" };
+	
+			JPanel painel = new JPanel();
+			painel.setLayout(null);
+			JLabel label = new JLabel("Digite seu CPF:");
+			label.setBounds(0,5,100,15);
+			painel.add(label);
+		
+			//Formatador
+			MaskFormatter cpfMask;
+			cpfMask = new MaskFormatter("###.###.###-##");
+			cpfMask.setValidCharacters("0123456789");
+			JFormattedTextField campo = new JFormattedTextField(cpfMask);
+			campo.setBounds(86,3,92,20);
+			painel.add(campo);
+			
+			int btn = JOptionPane.showOptionDialog(null, painel, "Consulta Banco de Horas", JOptionPane.YES_NO_CANCEL_OPTION, 
+					JOptionPane.QUESTION_MESSAGE, null, opcoes, null);
+			
+			if(btn == JOptionPane.YES_OPTION){
+	            cpf = campo.getText();
+	            cpfFormatado = cpf;
+	            cpf = cpf.replaceAll("[.-]", "");
+	            cpf = cpf.trim();
+	            
+	            if(cpf.length()== 0){
+	            	JOptionPane.showMessageDialog(null, "O campo CPF deve conter 11 caracteres!", "ERRO", JOptionPane.ERROR_MESSAGE);
+	            	digitaCPF();
+	            }
+		     }
+			 else if(btn == JOptionPane.CANCEL_OPTION) {
+				 JOptionPane.showMessageDialog(null, "APLICAÇÃO CRIADA POR: ADEMIR ROCHA GARCIA"
+						+ "\nDATA DE CRIAÇÃO: 27/09/2017"
+						+ "\nVERSÃO: " + versao
+						+ "\n\nA FINALIDADE DESTA APLICAÇÃO É DE APENAS CONSULTAR E CALCULAR AS HORAS DO BANCO"
+						+ "\nCOM BASE NAS INFORMAÇÕES FORNECIDAS PELA PRÓPRIA INMETRICS, ATRAVÉS DO SITE:"
+						+ "\n<html><span style ='color:blue'>https://aplic.inmetrics.com.br//requerimento/</span></html>"
+						+ "\nA APLICAÇÃO FOI PROJETADA PARA EFETUAR LOGIN COM O CPF COMO USÁRIO E SENHA.", "INFORMAÇÕES", JOptionPane.INFORMATION_MESSAGE);
+				 digitaCPF();
+			 }
+			 else {
+				 System.exit(0);
+			 }
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -95,7 +133,7 @@ public class ConsultaBH {
 			if(userInvalido == true){
 				driver.quit();
 				JOptionPane.showMessageDialog(null, "Problemas ao realizar login!\nVerifique se o CPF informado está correto: " 
-						+ cpf, "ERRO", JOptionPane.ERROR_MESSAGE);
+						+ cpfFormatado, "ERRO", JOptionPane.ERROR_MESSAGE);
 				Principal.main(new String[]{});
 				System.exit(0);
 			}
