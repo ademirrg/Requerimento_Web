@@ -132,8 +132,8 @@ public class ConsultaBH {
 			
 			if(userInvalido == true){
 				driver.quit();
-				JOptionPane.showMessageDialog(null, "Problemas ao realizar login!\nVerifique se o CPF informado está correto: " 
-						+ cpfFormatado, "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Problemas ao realizar login, usuário ou senha inválidos!"
+						+ "\nVerifique se o CPF informado está correto: " + cpfFormatado, "ERRO", JOptionPane.ERROR_MESSAGE);
 				Principal.main(new String[]{});
 				System.exit(0);
 			}
