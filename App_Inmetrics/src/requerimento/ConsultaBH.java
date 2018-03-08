@@ -42,7 +42,7 @@ public class ConsultaBH {
 	public void digitaCPF(){
 		
 		try {
-			Object[] opcoes = { "OK", "Cancelar", "?" };
+			Object[] opcoes = { "OK", "Cancelar", "Ajuda" };
 	
 			JPanel painel = new JPanel();
 			painel.setLayout(null);
@@ -79,7 +79,8 @@ public class ConsultaBH {
 						+ "\n\nA FINALIDADE DESTA APLICAÇÃO É DE APENAS CONSULTAR E CALCULAR AS HORAS DO BANCO"
 						+ "\nCOM BASE NAS INFORMAÇÕES FORNECIDAS PELA PRÓPRIA INMETRICS, ATRAVÉS DO SITE:"
 						+ "\n<html><span style ='color:blue'>https://aplic.inmetrics.com.br//requerimento/</span></html>"
-						+ "\nA APLICAÇÃO FOI PROJETADA PARA EFETUAR LOGIN COM O CPF COMO USÁRIO E SENHA.", "INFORMAÇÕES", JOptionPane.INFORMATION_MESSAGE);
+						+ "\nA APLICAÇÃO FOI PROJETADA PARA EXECUTAR A AUTOMAÇÃO NO NAVEGADOR GOOGLE CHROME"
+						+ "\nE EFETUAR O LOGIN COM O CPF COMO USUÁRIO E SENHA.", "INFORMAÇÕES", JOptionPane.INFORMATION_MESSAGE);
 				 digitaCPF();
 			 }
 			 else {
@@ -87,7 +88,6 @@ public class ConsultaBH {
 			 }
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -103,7 +103,7 @@ public class ConsultaBH {
 			JOptionPane.showMessageDialog(null, "Ops!\nParece que você não tem o chromedriver em sua máquina!"
 					+ "\nPara utilizar esta aplicação, baixe a versão mais recente do chromedriver no link abaixo:"
 					+ "\n<html><span style ='color:blue'>https://sites.google.com/a/chromium.org/chromedriver/downloads</span></html>"
-					+ "\nApós baixar o arquivo chromedriver.exe, coloque-o no diretório C: e execute a aplicação."
+					+ "\nApós baixar o arquivo compactado, extraia o arquivo chromedriver.exe no diretório C:"
 					+ "\nClique em OK e o link será copiado para sua área de transferência, após isso, "
 					+ "apenas cole (Ctrl+V) na página do seu navegador.", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);	
 			String link = "https://sites.google.com/a/chromium.org/chromedriver/downloads";
