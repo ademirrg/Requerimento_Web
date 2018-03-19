@@ -138,7 +138,7 @@ public class ConsultaBH {
 				System.exit(0);
 			}
 			else if(trocaPeriodo == true){
-				int confirmaConsultaPeriodoAnterior = JOptionPane.showConfirmDialog(null, "O cálculo de horas ainda não está disponível devido a troca recente de período!"
+				int confirmaConsultaPeriodoAnterior = JOptionPane.showConfirmDialog(null, "O cálculo de horas ainda não está disponível para este período!"
 						+ "\nDeseja consultar o período anterior?", "ATENÇÃO", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			
 				if(confirmaConsultaPeriodoAnterior == 0) {
